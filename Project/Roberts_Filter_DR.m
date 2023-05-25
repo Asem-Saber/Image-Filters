@@ -1,0 +1,19 @@
+function [ result ] = Roberts_Filter_DR( image)
+[H W L]=size(image);
+image=Padding(image);
+image=double(image);
+result=zeros(H+2,W+2);
+result=double(result);
+DR=[1 0 0;
+   0 0 0 ;
+   0 0 -1];
+
+for i=2:H+1
+    for j =2:W+1
+        result(i,j)=(DR(1,1)*image(i-1,j-1))+(DR(2,1)*image(i,j-1))+(DR(3,1)*image(i+1,j-1))+(DR(1,2)*image(i-1,j))+(DR(2,2)*image(i,j))+(DR(3,2)*image(i+1,j))+(DR(1,3)*image(i-1,j+1))+(DR(2,3)*image(i,j+1))+(DR(3,3)*image(i+1,j+1));
+        result(i,j)=result(i,j)+image(i,j);
+    end
+end
+result=uint8(result);
+end
+
